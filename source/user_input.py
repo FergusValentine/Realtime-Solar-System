@@ -13,8 +13,9 @@ class UserInput:
         mouse_x, mouse_y = pygame.mouse.get_pos()
 
         if self.mouse_pressed:
-            self.screen.offset_x -= (mouse_x - self.start_pan[0]) / self.screen.scale_x
-            self.screen.offset_y -= (mouse_y - self.start_pan[1]) / self.screen.scale_y
+            offset_x = (mouse_x - self.start_pan[0]) / self.screen.camera.zoom
+            offset_y = (mouse_y - self.start_pan[1]) / self.screen.camera.zoom
+            self.screen.camera.move(-offset_x, -offset_y)
 
             self.start_pan = (mouse_x, mouse_y)
 
@@ -32,14 +33,12 @@ class UserInput:
                     self.mouse_pressed = False
             elif event.type == pygame.MOUSEWHEEL:
                 if event.y > 0:
-                    self.screen.scale_x *= 1.1
-                    self.screen.scale_y *= 1.1
+                    self.screen.camera.zoom_in()
                 elif event.y < 0:
-                    self.screen.scale_x *= 0.9
-                    self.screen.scale_y *= 0.9
+                    self.screen.camera.zoom_out()
 
         mouse_x_after_zoom, mouse_y_after_zoom = self.screen.screen_to_world(mouse_x, mouse_y)
-        self.screen.offset_x += (mouse_x_before_zoom - mouse_x_after_zoom)
-        self.screen.offset_y += (mouse_y_before_zoom - mouse_y_after_zoom)
+
+        self.screen.camera.move((mouse_x_before_zoom - mouse_x_after_zoom), (mouse_y_before_zoom - mouse_y_after_zoom))
 
         return is_running

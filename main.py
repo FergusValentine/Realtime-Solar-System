@@ -1,5 +1,6 @@
 import pygame
 
+from source.camera import Camera
 from source.controller import SolarSystemController
 from source.model import Model
 from source.screen import Screen
@@ -23,7 +24,8 @@ class SolarSystemApplication:
 
     def create_app_components(self):
         model = Model()
-        screen = Screen(self.window, COLOURS["BLACK"])
+        camera = Camera(self.window.get_width(), self.window.get_height())
+        screen = Screen(self.window, camera, COLOURS["BLACK"])
         user_input = UserInput(screen)
 
         self.controller = SolarSystemController(model, screen, user_input)

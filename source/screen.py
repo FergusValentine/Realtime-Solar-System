@@ -1,15 +1,10 @@
 import pygame
 
 class Screen:
-    def __init__(self, window, colour):
+    def __init__(self, window, camera, colour):
         self.window = window
+        self.camera = camera
         self.background_colour = colour
-
-        self.offset_x = -self.window.get_width() / 2
-        self.offset_y = -self.window.get_height() / 2
-
-        self.scale_x = 1
-        self.scale_y = 1
 
     def draw(self, solar_system_model):
         planets = solar_system_model.planets
@@ -26,13 +21,13 @@ class Screen:
 
                 pygame.draw.lines(self.window, planet.colour, False, updated_points, 1)
 
-            pygame.draw.circle(self.window, planet.colour, (x, y), planet.radius * self.scale_x)
+            pygame.draw.circle(self.window, planet.colour, (x, y), planet.radius * self.camera.zoom)
 
     def refresh(self):
         self.window.fill(self.background_colour)
 
     def world_to_screen(self, x, y):
-        return (x - self.offset_x) * self.scale_x, (y - self.offset_y) * self.scale_y
+        return (x - self.camera.x) * self.camera.zoom, (y - self.camera.y) * self.camera.zoom
 
     def screen_to_world(self, x, y):
-        return (x/self.scale_x) + self.offset_x, (y / self.scale_y) + self.offset_y
+        return (x/self.camera.zoom) + self.camera.x, (y / self.camera.zoom) + self.camera.y

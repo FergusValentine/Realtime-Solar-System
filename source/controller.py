@@ -22,6 +22,8 @@ class SolarSystemController:
         self.screen.refresh()
         self.screen.draw(self.model)
 
+        pygame.display.update()
+
     def run(self):
         while self.is_running:
             self.clock.tick(60)
@@ -29,5 +31,3 @@ class SolarSystemController:
             self.handle_user_input()
             self.update_solar_system()
             self.draw_solar_system()
-
-            pygame.display.update()
