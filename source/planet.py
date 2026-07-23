@@ -13,13 +13,17 @@ class Planet:
 
     def __init__(self, planet_data):
         self.name = planet_data["name"]
+
         self.x = float(planet_data["distance"]) * self.AU
         self.y = 0
+
         self.radius = float(planet_data["radius"])
         self.colour = COLOURS.get(planet_data["colour"], COLOURS["BLACK"])
         self.mass = float(planet_data["mass"]) * 10 ** float(planet_data["mass_exp"])
+
         self.x_velocity = 0
         self.y_velocity = float(planet_data["velocity"]) * 1000
+
         self.orbit = deque(maxlen=100)
 
     def get_position(self):
