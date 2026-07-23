@@ -15,4 +15,7 @@ The project simulates planetary motion using Newtonian gravity, with planets int
 
 ## Screenshots
 
-Example:
+
+Install dependencies (bash):
+
+pip install -r requirements.txt
